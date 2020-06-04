@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>登录</title>
+    <link rel="stylesheet" type="text/css" href="../static/res/layui/css/layui.css">
+    <!--加载meta IE兼容文件-->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        body {
+            background-image: url(../static/登录.png);
+            background-repeat: no-repeat ;
+            background-attachment: fixed;
+            background-size:100% 100%;
+            -moz-background-size:100% 100%;
+
+        }
+    </style>
+</head>
+<body>
+<form class="layui-form" action="" style="margin-top: 20%;margin-left: 49%">
+    <div class="layui-form-item" >
+        <label class="layui-form-label" style="font-size: large;color: #A5A5A5;margin-top: 1%;margin-left: 1%">网点号：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="websiteId" required lay-verify="required" class="layui-input" style="width: 306px;font-size: large;color:#7A7A7A;height: 40px "value="CT002396">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-top: 3%;" >
+        <label class="layui-form-label" style="font-size: large;color: #A5A5A5;margin-top: 1%;margin-left: 1%">机构号：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="orgId" required lay-verify="required" class="layui-input" style="width: 306px;font-size: large;color:#7A7A7A;height: 40px"value="CT101">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-top: 3%;" >
+        <label class="layui-form-label" style="font-size: large;color: #A5A5A5;margin-top: 1%;margin-left: 1%">柜员号：</label>
+        <div class="layui-input-inline">
+            <input type="text" name="username" required lay-verify="required" class="layui-input" style="width: 306px;font-size: large;color:#7A7A7A;height: 40px "value="CT001290">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-top: 3%;" >
+        <label class="layui-form-label" style="font-size: large;color: #A5A5A5;margin-top: 1%;margin-left: 1%">密码：</label>
+        <div class="layui-input-inline">
+            <input type="password" name="password" required lay-verify="required" class="layui-input" style="width: 306px;font-size: large;color:#7A7A7A;height: 40px "value="123456">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-top: 3%;margin-left: 18%" >
+        <button type="button" class="layui-btn layui-btn-danger  layui-btn-lg "style="width: 306px" lay-submit lay-filter="formDemo">登录</button>
+    </div>
+
+</form>
+
+
+<script type="text/javascript" src="../static/res/layui/layui.js"></script>
+<script type="text/javascript" src="../static/res/layui/layui.all.js"></script>
+<script type="text/javascript" src="../static/res/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+            // layer.msg(JSON.stringify(data.field));
+            // return false;
+            window.location.href="businessHandling.html";
+        });
+    });
+</script>
+</body>
+</html>

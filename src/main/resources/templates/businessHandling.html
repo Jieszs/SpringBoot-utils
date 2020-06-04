@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>业务办理</title>
+    <link rel="stylesheet" type="text/css" href="../static/res/layui/css/layui.css">
+    <!--加载meta IE兼容文件-->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        body {
+            background-image: url(../static/业务办理.png);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .back-content {
+            height: 610px;
+            margin-left: 51px
+        }
+
+        .a-back {
+            font-size: large;
+            color: white;
+            margin-left: 80%;
+            top: 50px;
+        }
+
+        #steps {
+        }
+
+        .step-item {
+            display: inline-block;
+            line-height: 26px;
+            position: relative;
+            background: #ffffff;
+        }
+
+        .step-item-tail {
+            width: 50%;
+            padding: 0 10px;
+            margin-left: 30%;
+            position: absolute;
+            left: 0;
+            top: 13px;
+        }
+
+        .step-item-tail i {
+            display: inline-block;
+            width: 100%;
+            height: 1px;
+            vertical-align: top;
+            background: #BCBCBC;
+            position: relative;
+        }
+
+        .step-item-tail-done {
+            background: #FF4B00 !important;
+        }
+
+        .step-item-label {
+            margin-left: 10px;
+            font-weight: bolder;
+            color: #555555;
+        }
+
+        .step-item-head {
+            position: relative;
+            display: inline-block;
+            height: 26px;
+            width: 26px;
+            text-align: center;
+            vertical-align: top;
+            color: #FF4B00;
+            border: 1px solid #FF4B00;
+            border-radius: 50%;
+            background: #ffffff;
+        }
+
+        .step-item-head.step-item-head-active {
+            background: #ffffff;
+            border: 1px solid #BCBCBC;
+            color: #BCBCBC;
+        }
+
+        .step-item-main {
+            background: #ffffff;
+            display: block;
+            position: relative;
+        }
+
+        .step-item-main-title {
+            font-weight: bolder;
+            color: #555555;
+        }
+
+        .step-item-main-desc {
+            color: #CDCDCD;
+            margin-left: 40px;
+        }
+
+        .form-label {
+            color: #A5A5A5;
+            font-size: small;
+        }
+
+        .form-input {
+            color: #A5A5A5;
+            width: 90%;
+            height: 30px;
+            margin-left: -3%;
+        }
+
+        .form-item {
+            margin-top: -1.5%;
+            margin-left: -2%;
+        }
+
+        .layui-form-checked[lay-skin=primary] i {
+            border-color: black !important;
+            background-color: black !important;
+            color: white !important;
+            font-weight: bold;
+        }
+
+        .layui-form-checkbox[lay-skin=primary]:hover i {
+            border-color: #597FC0 !important;
+        }
+
+        .layui-form-radio > i:hover, .layui-form-radioed > i {
+            color: #597FC0 !important;
+        }
+
+        .face-data .layui-layer-btn0 {
+            background-color: #FF4B00 !important;
+            border: 1px solid #FF4B00 !important;
+            color: #FFF;
+        }
+
+    </style>
+</head>
+<body>
+<div class="back-content">
+    <div style="height: 20px"></div>
+    <div>
+        <a class="a-back" href="login.html">返回</a>
+    </div>
+    <div style="margin-left: 16%;margin-top: 5%">
+        <div id="steps"></div>
+    </div>
+    <div style="margin-left: 13%;margin-top: 2%;width: 71%;height: 62%;border: 1px solid #EDEDED;background: rgba(0,0,0,0)">
+        <div style="background: #F9F9F9;height: 100%;width: 28%;float: left">
+            <div style="background: #EBEBEB;margin-left: 10%;margin-top: 20%;height: 66%;margin-right: 10%">
+                <img src="../static/res/img/renyuan-moren.png" style="margin-left:2%;margin-top: 12%;height: 77%"
+                     id="userPhoto">
+            </div>
+        </div>
+        <div style="width: 72%;float: right">
+            <div class="layui-form " style="margin-top: 6.5%">
+                <div class="layui-form-item form-item">
+                    <label class="layui-form-label form-label">证件类型：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="idType" id="idType" class="layui-input form-input" disabled>
+                    </div>
+                    <label class="layui-form-label form-label">证件号码：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="number" id="number" class="layui-input form-input" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item form-item">
+                    <label class="layui-form-label form-label">姓名：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="name" id="name" class="layui-input form-input" disabled>
+                    </div>
+                    <label class="layui-form-label form-label">民族：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="mz" id="mz" class="layui-input form-input" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item form-item">
+                    <label class="layui-form-label form-label">国籍：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="nation" id="nation" class="layui-input form-input" disabled>
+                    </div>
+                    <label class="layui-form-label form-label">性别：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="sex" id="sex" class="layui-input form-input" disabled>
+                    </div>
+                </div>
+                <div class="layui-form-item form-item">
+                    <label class="layui-form-label form-label">出生日期：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="birthDate" id="birthDate" class="layui-input form-input " disabled>
+                    </div>
+                    <label class="layui-form-label form-label">有效期：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="validDateEnd" id="validDateEnd" class="layui-input form-input"
+                               disabled>
+                    </div>
+
+                </div>
+                <div class="layui-form-item form-item">
+                    <label class="layui-form-label form-label">开户金额：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="money" id="money" required lay-verify="required"
+                               class="layui-input form-input">
+                    </div>
+                    <label class="layui-form-label form-label">联系电话：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="phone" id="phone" required lay-verify="required"  class="layui-input form-input">
+                    </div>
+                </div>
+                <div class="layui-form-item form-item">
+                    <label class="layui-form-label form-label">开通：</label>
+                    <input type="checkbox" name="" title="网上银行" lay-skin="primary" checked>
+                    <input type="checkbox" name="" title="短信通" lay-skin="primary" checked>
+                    <input type="checkbox" name="" title="手机银行" lay-skin="primary" checked>
+                    <input type="checkbox" name="" title="电话银行" lay-skin="primary" checked>
+                </div>
+                <div class="layui-form-item " style="margin-left: 3%;margin-top: 5%">
+                    <button type="button" id="getQrCode" class="layui-btn layui-btn-danger  layui-btn-sm "
+                            style="width: 100px">验码
+                    </button>
+                    <button type="button" id="getPhotoData" class="layui-btn layui-btn-danger layui-btn-sm  "
+                            style="width: 100px;margin-left: 5%">人像比对
+                    </button>
+                    <button type="button" class="layui-btn layui-btn-danger layui-btn-sm  "
+                            style="width: 100px;margin-left: 35%" lay-submit lay-filter="formDemo">提交
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript" src="../static/res/layui/layui.js"></script>
+<script type="text/javascript" src="../static/res/layui/layui.all.js"></script>
+<script type="text/javascript" src="../static/res/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+    layui.config({
+        base: '../static/res/extends/'
+    });
+    var serverUrl = "http://localhost:9636";
+    var photoRGBData = "0";
+    var photoIRData = "0";
+    var qrCode = "0";
+    jQuery(document).ready(function () {
+        $('#getQrCode').on('click', getQrCode);
+        $('#getPhotoData').on('click', getFaceData);
+        refreshSteps(0);
+    });
+
+    function getFaceData() {
+        if (qrCode == "0") {
+            layer.msg("请先完成验码");
+            return;
+        }
+        var closeId;
+        layer.open({
+            skin: 'face-data',
+            title: '人像比对',
+            type: 2,
+            area: ['660px', '520px'],
+            shadeClose: true,
+            scrollbar: false,
+            content: ['captureBinocularCamera.html', 'no'],
+            btn: ['开始'],
+            btnAlign: 'c',
+            btn1: function (index, layero) {
+                var demo = document.getElementsByClassName("layui-layer-btn0");
+                demo[0].innerHTML = "正在比对中...";
+                closeId = setInterval(function () {
+                    photoRGBData = $(layero).find("iframe")[0].contentWindow.photoRGBData();
+                    photoIRData = $(layero).find("iframe")[0].contentWindow.photoIRData();
+                    $.ajax({
+                        type: "POST",
+                        url: serverUrl + "/api/antSpoofs/",
+                        data: {
+                            rgb: photoRGBData,
+                            ir: photoIRData
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            if (data == true) {
+                                layer.msg("活体检测通过");
+                                clearInterval(closeId);
+                                getCivilInfo();
+                                layer.close(index);
+                            }
+                        },
+                        error: function (data) {
+                            console.log(data);
+                        }
+                    });
+                }, 300);
+            },
+            end: function (layero, index) {
+                clearInterval(closeId);
+            }
+        });
+    }
+
+    function getQrCode() {
+        var index = layer.load(0);
+        $.ajax({
+            type: "GET",
+            url: serverUrl + "/api/qrCodes/BySDK",
+            success: function (data) {
+                layer.close(index);
+                layer.msg("二维码识别成功");
+                qrCode = data;
+                console.log(data);
+                refreshSteps(1)
+            },
+            error: function (data) {
+                layer.close(index);
+                if (typeof (data) == "undefined") {
+                    layer.msg("网络异常");
+                }
+                if (data.statusText.search("error") != -1) {
+                    layer.msg("网络异常");
+                }
+                layer.msg(data.responseJSON.message);
+            }
+        });
+
+    }
+
+    function refreshSteps(index) {
+        $('#steps').empty();
+        layui.use('steps', function () {
+            var steps = layui.steps;
+
+            var data = [
+                {'title': "验码", "desc": "检验客户网证二维码"},
+                {'title': "人像比对", "desc": "活体人像采集，联网信息比对"},
+                {'title': "提交", "desc": "业务办理完成"}
+            ];
+
+            steps.make(data, '#steps', index);
+        });
+    }
+
+    function getCivilInfo() {
+        $.ajax({
+            type: "POST",
+            url: serverUrl + "/api/ctid/getCivilInfo",
+            data: {
+                qrCode: qrCode,
+                authMode: "V050",
+                photoData: photoRGBData
+            },
+            success: function (data) {
+                var info = data.data.civilIdentityInfo;
+                refreshSteps(2);
+                document.getElementById('name').value = info.name;
+                document.getElementById('sex').value = "男";
+                document.getElementById('idType').value = "居民身份证";
+                document.getElementById('mz').value = "汉族";
+                document.getElementById('nation').value = "中国";
+                document.getElementById('birthDate').value = "1997 年 8 月 10 日";
+                document.getElementById('number').value = info.number;
+                document.getElementById('validDateEnd').value = info.validDateEnd;
+                document.getElementById("userPhoto").src = "../static/res/img/xlpic.jfif";
+                console.log(data);
+                qrCode = "0";
+                photoRGBData = "0"
+            },
+            error: function (data) {
+                console.log(data);
+                layer.msg(data.responseJSON.message)
+            }
+        });
+    }
+
+    layui.use('form', function () {
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formDemo)', function (data) {
+            layer.alert('提交成功', {icon: 1, title: '提示'}, function (index) {
+                layer.close(index);
+                window.location.reload();
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

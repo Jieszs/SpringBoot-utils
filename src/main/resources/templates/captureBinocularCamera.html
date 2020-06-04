@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>双目摄像头</title>
+</head>
+<body>
+<video hidden="hidden" id="IRVideo" width="640" height="480" controls>
+</video>
+<video id="RGBVideo" width="640" height="480" >
+</video>
+<canvas id="IRCanvas" hidden="hidden" width="640" height="480"></canvas>
+<canvas id="RGBCanvas" hidden="hidden" width="640" height="480"></canvas>
+<!--<div>-->
+    <!--<button id="capture">拍照</button>-->
+<!--</div>-->
+<!--<canvas id="IRCanvas" width="640" height="480"></canvas>-->
+<!--<canvas id="RGBCanvas1" width="640" height="480"></canvas>-->
+<script>
+    navigator.mediaDevices.enumerateDevices()
+        .then(gotDevices).catch(handleError);
+    var IRVideo = document.getElementById('IRVideo');
+    var RGBVideo = document.getElementById('RGBVideo');
+    var IRCanvas = document.getElementById('IRCanvas');
+    var IRContext = IRCanvas.getContext('2d');
+    var RGBCanvas = document.getElementById('RGBCanvas');
+    var RGBContext = RGBCanvas.getContext('2d');
+    var photoRGBData = function () {
+        RGBContext.drawImage(RGBVideo, 0, 0, 640, 480);
+        let img64 = RGBCanvas.toDataURL("image/jpeg"); //转化成base64为图片
+        return img64.replace("data:image/jpeg;base64,", "");
+    }
+    var photoIRData = function () {
+        IRContext.drawImage(IRVideo, 0, 0, 640, 480);
+        let img64 = IRCanvas.toDataURL("image/jpeg"); //转化成base64为图片
+        return img64.replace("data:image/jpeg;base64,", "");
+    }
+    // 遍历所有的设备，包括视频和音频设备,找到双目摄像头
+    function gotDevices(deviceInfos) {
+        console.log(deviceInfos);
+        var constraints = new Array(2);
+        var labelInfos = new Array(2);
+        var id = 0;
+        for (var i = 0; i < deviceInfos.length; i++) {
+            var deviceInfo = deviceInfos[i];
+            if (deviceInfo.kind === 'videoinput') {
+                if (deviceInfo.label.search("Centerm") != -1) {
+                    constraints[id] = {
+                        video: {
+                            deviceId: deviceInfo.deviceId
+                        }
+                    };
+                    labelInfos[id] = deviceInfo.label;
+                    id = id + 1;
+                }
+            }
+        }
+        //
+        if (labelInfos[0].search("2b46:bd06") != -1) {
+            getUserMedia(constraints[0], gotIRStream, error);
+            getUserMedia(constraints[1], gotRGBStream, error);
+        }else {
+            getUserMedia(constraints[0], gotRGBStream, error);
+            getUserMedia(constraints[1], gotIRStream, error);
+        }
+    }
+
+    function handleError(error) {
+        console.log('Error: ', error);
+    }
+
+    function gotIRStream(stream) {
+        window.stream = stream; // make stream available to console
+        IRVideo.srcObject = stream;
+        IRVideo.play();
+    }
+
+    function gotRGBStream(stream) {
+        window.stream = stream; // make stream available to console
+        RGBVideo.srcObject = stream;
+        RGBVideo.play();
+    }
+
+    //访问用户媒体设备的兼容方法
+    function getUserMedia(constraints, success, error) {
+        if (navigator.mediaDevices.getUserMedia) {
+            //最新的标准API
+            navigator.mediaDevices.getUserMedia(constraints).then(success).catch(error);
+        } else if (navigator.webkitGetUserMedia) {
+            //webkit核心浏览器
+            navigator.webkitGetUserMedia(constraints, success, error)
+        } else if (navigator.mozGetUserMedia) {
+            //firfox浏览器
+            navigator.mozGetUserMedia(constraints, success, error);
+        } else if (navigator.getUserMedia) {
+            //旧版API
+            navigator.getUserMedia(constraints, success, error);
+        }
+    }
+
+    function error(error) {
+        console.log(`访问用户媒体设备失败${error.name}, ${error.message}`);
+    }
+
+    // document.getElementById('capture').addEventListener('click', function () {
+    //     context.drawImage(IRVideo, 0, 0, 640, 480);
+    //     context1.drawImage(RGBVideo, 0, 0, 640, 480);
+    // })
+</script>
+</body>
+</html>
